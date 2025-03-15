@@ -6,8 +6,8 @@
     <title>Feedback - Talento Tech</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             margin: 0;
             padding: 0;
             display: flex;
@@ -17,15 +17,17 @@
         }
         .container {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 400px;
             text-align: center;
+            position: relative;
         }
         h2 {
             color: #333;
+            margin-bottom: 20px;
         }
         form {
             display: flex;
@@ -34,33 +36,72 @@
         label {
             margin-top: 10px;
             text-align: left;
+            font-weight: bold;
+            color: #555;
         }
         input, textarea {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            font-size: 14px;
         }
         button {
-            background-color: #28a745;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px;
             margin-top: 15px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            transition: 0.3s;
         }
         button:hover {
-            background-color: #218838;
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
+        }
+        .message {
+            display: none;
+            margin-top: 15px;
+            color: #155724;
+            background-color: #d4edda;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #c3e6cb;
+            font-weight: bold;
+            position: relative;
+        }
+        .emoji {
+            display: none;
+            font-size: 50px;
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 1s ease-in-out infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, -10px); }
         }
     </style>
+    <script>
+        function showMessage(event) {
+            event.preventDefault();
+            document.querySelector(".message").style.display = "block";
+            document.querySelector(".emoji").style.display = "block";
+            document.querySelector("form").reset();
+            setTimeout(() => {
+                document.querySelector(".emoji").style.display = "none";
+            }, 3000);
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <h2>Deixe seu Feedback</h2>
-        <form action="#" method="POST">
+        <form onsubmit="showMessage(event)">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" required>
 
@@ -72,6 +113,8 @@
 
             <button type="submit">Enviar</button>
         </form>
+        <div class="message">Obrigado pelo seu feedback!</div>
+        <div class="emoji">🎉</div>
     </div>
 </body>
 </html>
