@@ -47,6 +47,21 @@
             border-radius: 5px;
             font-size: 14px;
         }
+        .stars {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        .stars span {
+            font-size: 30px;
+            cursor: pointer;
+            transition: color 0.3s;
+            aria-label: "Estrela de avaliação";
+        }
+        .stars span:hover,
+        .stars span.selected {
+            color: gold;
+        }
         button {
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
@@ -71,6 +86,8 @@
             border: 1px solid #c3e6cb;
             font-weight: bold;
             position: relative;
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
         }
         .emoji {
             display: none;
@@ -90,11 +107,25 @@
         function showMessage(event) {
             event.preventDefault();
             document.querySelector(".message").style.display = "block";
+            setTimeout(() => {
+                document.querySelector(".message").style.opacity = "1";
+            }, 100);
             document.querySelector(".emoji").style.display = "block";
             document.querySelector("form").reset();
             setTimeout(() => {
                 document.querySelector(".emoji").style.display = "none";
             }, 3000);
+        }
+        function rateStars(rating) {
+            document.getElementById("rating").value = rating;
+            const stars = document.querySelectorAll(".stars span");
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add("selected");
+                } else {
+                    star.classList.remove("selected");
+                }
+            });
         }
     </script>
 </head>
@@ -110,7 +141,16 @@
 
             <label for="mensagem">Mensagem:</label>
             <textarea id="mensagem" name="mensagem" rows="4" required></textarea>
-
+            
+            <label>Avaliação:</label>
+            <div class="stars">
+                <span onclick="rateStars(1)">★</span>
+                <span onclick="rateStars(2)">★</span>
+                <span onclick="rateStars(3)">★</span>
+                <span onclick="rateStars(4)">★</span>
+                <span onclick="rateStars(5)">★</span>
+            </div>
+            <input type="hidden" id="rating" name="rating" value="0">
             <button type="submit">Enviar</button>
         </form>
         <div class="message">Obrigado pelo seu feedback!</div>
